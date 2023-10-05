@@ -13,12 +13,18 @@ const Register = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const checked = e.target.checkbox.checked;
+
+    // console.log( email , password, checked);
 
     //* reset error
     setRegisterError('')
     //* reset success
     setSuccess('')
+    
 
+    
+    // * Validations 
     if (password.length < 6) {
       setRegisterError('Password should be at least 6 characters or longer');
       return;
@@ -27,7 +33,13 @@ const Register = () => {
       setRegisterError('You password should have an uppercase')
       return;
     }
+    else if (! checked){
+      console.log('Please Accept Terms and Conditions');
+      setRegisterError('Please Accept Terms and Conditions');
+      return;
+    }
 
+    
     createUserWithEmailAndPassword(auth, email, password)
       .then(result => {
         // result.user
@@ -44,16 +56,29 @@ const Register = () => {
 
   return (
     <div className='mx-auto'>
+      
       <form className='text-center' onSubmit={handleFormSubmit}>
+        
         <h2 className='text-3xl mb-4'>Please Register</h2>
+        
         <input className='mb-4 p-4 w-2/6 h-8 rounded-md' type="email" name="email" id="" placeholder='Email' required />
         <br />
+        
         <div className="relative">
           <input className='mb-4 p-4 w-2/6 h-8 rounded-md' type={ showPassword? `text` : `password`} name="password" id="" placeholder='Password' required />
           <span className="absolute right-[34%] bottom-4"><button style={{fontSize:'20px', marginRight: '10px'}} onClick={()=> setShowPassword(!showPassword)}>{showPassword ? <AiFillEye></AiFillEye>:<AiFillEyeInvisible/>}</button></span>
         </div>
         <br />
+
+        <input type="checkbox" name="checkbox" id="" />
+        <label htmlFor="">  I accept terms and Conditions</label>
+        
+        <br />
+        <br />
+        
         <input className='px-6 py-4 bg-pink-400 text-white w-2/6 rounded-md hover:cursor-pointer' type="submit" name="submit" id="" required />
+
+        
       </form>
 
       {registerError && <p className="text-red-600">{registerError}</p>}
