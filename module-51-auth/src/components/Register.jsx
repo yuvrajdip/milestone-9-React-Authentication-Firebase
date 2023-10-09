@@ -7,14 +7,7 @@ const Register = () => {
 
   const authInfo = useContext(AuthContext);
  
-  const {createUser} = authInfo;
-
-
-  // const handleLogOut = () => {
-  //   logOut()
-  //   .then(()=> console.log('User LoggedOut Successfully'))
-  //   .catch(error=> console.error(error.message))
-  // }
+  const {createUser, logOut} = authInfo;
 
 
   const handleRegister = e => {
@@ -30,7 +23,15 @@ const Register = () => {
     
     //todo : create user
     createUser(email, password)
-    .then(result=>console.log(result.user))
+    .then(result=>{
+      // console.log(result.user)
+
+      // todo: register korte gele auto login hoye jaoar problem solve
+      logOut()
+      .then(()=> console.log('User LoggedOut Successfully'))
+      .catch(error=> console.error(error.message))
+      
+    })
     .catch(error=>{
       console.error(error.message)
     })
