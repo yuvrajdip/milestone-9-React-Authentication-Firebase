@@ -6,12 +6,15 @@ import Root from './components/Root'
 import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
+import AuthProvider from './provider/AuthProvider'
+import Orders from './components/Orders'
+// import PrivateRoute from './routes/PrivateRoute'
 
-const router=createBrowserRouter([
+const router = createBrowserRouter([
   {
-    path:"/",
+    path: "/",
     element: <Root></Root>,
-    children:[
+    children: [
       {
         path: "/",
         element: <Home></Home>
@@ -23,13 +26,19 @@ const router=createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>
-      }
+      },
+      {
+        path: "/orders",
+        element: <Orders></Orders>
+      },
     ]
   }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )

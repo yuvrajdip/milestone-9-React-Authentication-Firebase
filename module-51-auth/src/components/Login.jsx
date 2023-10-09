@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
+import auth from '../firebase.config';
 
 const Login = () => {
+  const user = auth.currentUser;
+
+  // user !==null &&  console.log( user.displayName );
+
+  const {signInUser} = useContext(AuthContext);
 
   const handleLogin = e => {
     e.preventDefault();
@@ -10,6 +17,14 @@ const Login = () => {
     const password = e.target.password.value;
 
     console.log(email, password);
+
+
+    // todo: Sign In as User
+    signInUser(email, password)
+    .then(result=> {
+      console.log(result.user)
+    })
+    .catch(error=> console.log(error.message))
   }
 
   return (
@@ -43,6 +58,8 @@ const Login = () => {
           </form>
 
           <p>New User? Please <Link to="/register" className='btn-link'>Register</Link></p>
+
+          {/* <p>User Name : {user.displayName}</p> */}
         </div>
       </div>
     </div>

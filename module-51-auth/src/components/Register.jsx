@@ -1,15 +1,39 @@
-import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Register = () => {
+  // const [ registered, setRegistered ] = useState('');
+
+  const authInfo = useContext(AuthContext);
+ 
+  const {createUser} = authInfo;
+
+
+  // const handleLogOut = () => {
+  //   logOut()
+  //   .then(()=> console.log('User LoggedOut Successfully'))
+  //   .catch(error=> console.error(error.message))
+  // }
+
+
   const handleRegister = e => {
     e.preventDefault();
+    console.log(' from register');
 
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
 
     console.log(email, password, name);
+
+    
+    //todo : create user
+    createUser(email, password)
+    .then(result=>console.log(result.user))
+    .catch(error=>{
+      console.error(error.message)
+    })
   }
 
   return (
@@ -43,7 +67,7 @@ const Register = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
+              <button type="submit" className="btn btn-primary">Register</button>
             </div>
           </form>
 
